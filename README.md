@@ -7,7 +7,7 @@
 
 [![npm version](https://img.shields.io/npm/v/prompt-architect?style=flat-square&label=npm&color=58a6ff)](https://www.npmjs.com/package/prompt-architect)
 [![License: MIT](https://img.shields.io/badge/license-MIT-58a6ff?style=flat-square)](LICENSE)
-[![GitHub](https://img.shields.io/badge/github-simonbalazs/prompt--architect-58a6ff?style=flat-square&logo=github)](https://github.com/simonbalazs/prompt-architect)
+[![GitHub](https://img.shields.io/badge/github-simonbbbb/prompt--architect-58a6ff?style=flat-square&logo=github)](https://github.com/simonbbbb/prompt-architect)
 [![Medium](https://img.shields.io/badge/medium-@balazsdevops-58a6ff?style=flat-square&logo=medium)](https://medium.com/@balazsdevops)
 [![Website](https://img.shields.io/badge/simonbalazs.hu-58a6ff?style=flat-square&logo=safari)](https://simonbalazs.hu)
 
