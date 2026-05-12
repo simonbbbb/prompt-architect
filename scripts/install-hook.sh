@@ -8,27 +8,34 @@ if [[ "$MODE" != "full" && "$MODE" != "light" && "$MODE" != "off" ]]; then
   exit 1
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-CLAUDE_DIR="$SCRIPT_DIR/.claude"
+# Install to the CURRENT working directory's .claude/, not the package dir
+CLAUDE_DIR="$(pwd)/.claude"
 SETTINGS_FILE="$CLAUDE_DIR/settings.local.json"
-
 mkdir -p "$CLAUDE_DIR"
 
-# Build the hook script content based on mode
 if [[ "$MODE" == "off" ]]; then
-  HOOK_SCRIPT=""
-  echo "[prompt-architect] Installing hook in OFF mode (no transformation)"
+  HOOK_SCRIPT="cat"
+  echo "[prompt-architect] Installing hook in OFF mode (clean pass-through)"
 elif [[ "$MODE" == "full" ]]; then
-  HOOK_SCRIPT='echo "[prompt-architect] FULL mode active"'
+  read -r -d '' HOOK_SCRIPT <<'HOOK' || true
+INPUT=$(cat)
+printf '%s\n' "$INPUT"
+printf '\nApply the 5-pillar prompt engineering framework to this request before responding:\n1. CLARITY: One task per turn. Define format. Set constraints.\n2. CONTEXT: Provide relevant background. Know your audience. State success criteria.\n3. STRUCTURE: Use XML tags. Break into steps. Provide examples.\n4. ADVANCED: Think step-by-step. Self-critique. Use persona.\n5. ITERATION: Present options first. Gate steps. Ask for approval.\n'
+HOOK
   echo "[prompt-architect] Installing hook in FULL mode"
 else
-  HOOK_SCRIPT='echo "[prompt-architect] LIGHT mode active"'
+  read -r -d '' HOOK_SCRIPT <<'HOOK' || true
+INPUT=$(cat)
+printf '%s\n' "$INPUT"
+printf '\nBefore responding: one task per turn, explicit output format, self-review against constraints.\n'
+HOOK
   echo "[prompt-architect] Installing hook in LIGHT mode"
 fi
 
-# Write settings file
-ESCAPED_SCRIPT=$(printf '%s\n' "$HOOK_SCRIPT" | sed 's/["\]/\\&/g')
-printf '{\n  "hooks": {\n    "UserPromptSubmit": {\n      "scope": "project",\n      "script": "%s"\n    }\n  }\n}\n' "$ESCAPED_SCRIPT" > "$SETTINGS_FILE"
+# Escape the hook script for JSON (escape backslashes, quotes, newlines)
+ESCAPED_SCRIPT=$(printf '%s' "$HOOK_SCRIPT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
+
+printf '{\n  "hooks": {\n    "UserPromptSubmit": {\n      "scope": "project",\n      "script": %s\n    }\n  }\n}\n' "$ESCAPED_SCRIPT" > "$SETTINGS_FILE"
 
 echo "[prompt-architect] Hook installed to $SETTINGS_FILE"
 echo "[prompt-architect] Mode: $MODE"

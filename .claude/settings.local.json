@@ -2,7 +2,7 @@
   "hooks": {
     "UserPromptSubmit": {
       "scope": "project",
-      "script": "echo '[prompt-architect] Hook not installed. Run `npx prompt-architect install` to configure.'"
+      "script": "INPUT=$(cat)\nprintf '%s\\n' \"$INPUT\"\nprintf '\\nApply the 5-pillar prompt engineering framework to this request before responding:\\n1. CLARITY: One task per turn. Define format. Set constraints.\\n2. CONTEXT: Provide relevant background. Know your audience. State success criteria.\\n3. STRUCTURE: Use XML tags. Break into steps. Provide examples.\\n4. ADVANCED: Think step-by-step. Self-critique. Use persona.\\n5. ITERATION: Present options first. Gate steps. Ask for approval.\\n'"
     }
   }
 }

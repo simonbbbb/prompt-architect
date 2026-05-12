@@ -24,6 +24,22 @@ Examples:
 HELP
 }
 
+# Resolve script directory, following symlinks (e.g. when run via npx .bin/ symlink)
+resolve_script_dir() {
+  local target="$0"
+  while [ -h "$target" ]; do
+    local link_dir
+    link_dir="$(cd "$(dirname "$target")" && pwd)" || return 1
+    target="$(readlink "$target")"
+    # Make relative symlink targets absolute
+    case "$target" in
+      /*) ;;
+      *) target="$link_dir/$target" ;;
+    esac
+  done
+  cd "$(dirname "$target")/.." && pwd
+}
+
 COMMAND="${1:-help}"
 shift 2>/dev/null || true
 
@@ -40,11 +56,11 @@ case "$COMMAND" in
       echo "Error: mode must be 'full', 'light', or 'off' (got: $MODE)" >&2
       exit 1
     fi
-    SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+    SCRIPT_DIR="$(resolve_script_dir)"
     bash "$SCRIPT_DIR/scripts/install-hook.sh" "$MODE"
     ;;
   template)
-    SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+    SCRIPT_DIR="$(resolve_script_dir)"
     cat "$SCRIPT_DIR/templates/prompt-template.xml"
     ;;
   version)
