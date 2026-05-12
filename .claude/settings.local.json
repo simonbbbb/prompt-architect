@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "UserPromptSubmit": {
+      "scope": "project",
+      "script": "echo '[prompt-architect] Hook not installed. Run `npx prompt-architect install` to configure.'"
+    }
+  }
+}

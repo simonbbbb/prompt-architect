@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>prompt-architect - Senior Prompt Engineer layer for Claude Code</title>
+<meta name="description" content="A Senior Prompt Engineer layer for Claude Code — translates fuzzy instructions into precision-engineered prompts using the 5-pillar framework.">
+<style>
+  :root { --bg: #ffffff; --bg-card: #f6f8fa; --text: #1f2328; --text-secondary: #656d76; --border: #d0d7de; --accent: #0969da; --header-bg: #0d1117; --header-text: #f0f6fc; --header-sub: #8b949e; --code-bg: #1f2328; --code-text: #e6edf3; --tag-bg: #ddf4ff; --tag-text: #0969da; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+  .header { background: var(--header-bg); color: var(--header-text); padding: 48px 24px; text-align: center; }
+  .header svg { display: block; margin: 0 auto 16px; }
+  .header h1 { font-size: 2rem; font-weight: 600; margin-bottom: 8px; }
+  .header p { color: var(--header-sub); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+  .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; margin-top: 40px; }
+  .section-title:first-of-type { margin-top: 0; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border); color: var(--text); background: var(--bg-card); transition: border-color .2s; }
+  .badge:hover { border-color: var(--accent); }
+  .badge-npm { background: #cb3837; color: #fff; border-color: #cb3837; }
+  .badge-github { background: #1f2328; color: #fff; border-color: #1f2328; }
+  .badge-medium { background: #000; color: #fff; border-color: #000; }
+  .badge-site { background: #2da44e; color: #fff; border-color: #2da44e; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+  .feature-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; transition: border-color .2s; }
+  .feature-card:hover { border-color: var(--accent); }
+  .feature-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .feature-card p { font-size: 0.875rem; color: var(--text-secondary); }
+  .code-block { background: var(--code-bg); color: var(--code-text); border-radius: 8px; padding: 16px 20px; font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", monospace; font-size: 0.875rem; margin-bottom: 24px; overflow-x: auto; }
+  .code-block .comment { color: #8b949e; }
+  .code-block .cmd { color: #d2a8ff; }
+  .code-block .line { display: block; }
+  .mode-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+  .mode-table th, .mode-table td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .mode-table th { background: var(--bg-card); font-weight: 600; }
+  .mode-table td:first-child { font-weight: 600; white-space: nowrap; }
+  .tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 2px 8px; border-radius: 4px; font-family: "SF Mono", monospace; font-size: 0.8rem; }
+  .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .pillar-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .pillar-card h3 { font-size: 1rem; margin-bottom: 4px; color: var(--accent); }
+  .pillar-card .diag { font-size: 0.8rem; color: var(--text-secondary); font-style: italic; margin-top: 8px; }
+  .footer { text-align: center; padding: 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.85rem; }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  @media (max-width: 700px) { .features { grid-template-columns: 1fr; } .header h1 { font-size: 1.5rem; } .header { padding: 32px 16px; } }
+  @media (max-width: 480px) { .badges { flex-direction: column; align-items: center; } }
+</style>
+</head>
+<body>
+<header class="header">
+  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="prompt-architect logo">
+    <rect x="2" y="2" width="40" height="40" rx="10" stroke="#58a6ff" stroke-width="2.5" fill="none"/>
+    <path d="M14 28L20 22L14 16" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 28H30" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="34" cy="14" r="3" fill="#3fb950"/>
+  </svg>
+  <h1>prompt-architect</h1>
+  <p>A Senior Prompt Engineer layer for Claude Code — translates fuzzy instructions into precision-engineered prompts using the 5-pillar framework</p>
+</header>
+<div class="container">
+  <div class="badges">
+    <a class="badge badge-npm" href="https://www.npmjs.com/package/prompt-architect" target="_blank" rel="noopener">npm &middot; 0.1.0</a>
+    <a class="badge badge-github" href="https://github.com/simonbalazs/prompt-architect" target="_blank" rel="noopener">GitHub</a>
+    <a class="badge badge-medium" href="https://medium.com/@balazsevops" target="_blank" rel="noopener">Medium</a>
+    <a class="badge badge-site" href="https://simonbalazs.hu" target="_blank" rel="noopener">simonbalazs.hu</a>
+  </div>
+
+  <h2 class="section-title">Features</h2>
+  <div class="features">
+    <div class="feature-card">
+      <h3>Expand Mode</h3>
+      <p>Turns fuzzy instructions into structured XML prompts — role, context, objective, constraints, review criteria, and first action.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Critique Mode</h3>
+      <p>Scores your prompts across all 5 pillars (0-10 each) with specific findings and concrete fixes.</p>
+    </div>
+    <div class="feature-card">
+      <h3>One-Command Hook</h3>
+      <p>Installs a UserPromptSubmit hook. Runs automatically before every message, no manual invocation needed.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Canonical Template</h3>
+      <p>9-section XML template covering role, context, audience, source material, objective, gated instructions, format, constraints, review criteria.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Per-Request Override</h3>
+      <p>Prefix any message with <code>[full]</code>, <code>[light]</code>, or <code>[off]</code> to override your default mode.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Zero Config</h3>
+      <p>Set your default mode in CLAUDE.md. Everything else is sensible defaults.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Hook Modes</h2>
+  <table class="mode-table">
+    <thead>
+      <tr><th>Mode</th><th>Invocation</th><th>What It Does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag">full</span></td>
+        <td><code># prompt-architect-mode: full</code> or prefix <code>[full]</code></td>
+        <td>Appends the full 5-pillar checklist to every request. Maximum clarity enforcement. Adds ~100 tokens per message.</td>
+      </tr>
+      <tr>
+        <td><span class="tag">light</span></td>
+        <td><code># prompt-architect-mode: light</code> or prefix <code>[light]</code></td>
+        <td>Appends concise structure enforcement: one task per turn, explicit format, self-review. Adds ~30 tokens per message.</td>
+      </tr>
+      <tr>
+        <td><span class="tag">off</span></td>
+        <td><code># prompt-architect-mode: off</code> or prefix <code>[off]</code></td>
+        <td>Clean pass-through. No transformation. Zero token overhead.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">The 5 Pillars</h2>
+  <div class="pillar-grid">
+    <div class="pillar-card">
+      <h3>Clarity</h3>
+      <p>One task, defined format, explicit constraints</p>
+      <p class="diag">"Could a literal-minded assistant misunderstand?"</p>
+    </div>
+    <div class="pillar-card">
+      <h3>Context</h3>
+      <p>Background, audience, source material, goal</p>
+      <p class="diag">"Would the output change if Claude knew WHY?"</p>
+    </div>
+    <div class="pillar-card">
+      <h3>Structure</h3>
+      <p>XML tags, numbered steps, examples</p>
+      <p class="diag">"Can Claude instantly parse instructions vs context?"</p>
+    </div>
+    <div class="pillar-card">
+      <h3>Advanced</h3>
+      <p>CoT, self-critique, alternatives, persona</p>
+      <p class="diag">"Would drafting then critiquing improve quality?"</p>
+    </div>
+    <div class="pillar-card">
+      <h3>Iteration</h3>
+      <p>Review criteria, first action, gated steps</p>
+      <p class="diag">"Single-shot or collaboration?"</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Quick Install</h2>
+  <div class="code-block">
+    <span class="line"><span class="comment"># Install globally</span></span>
+    <span class="line"><span class="cmd">npm install -g prompt-architect</span></span>
+    <span class="line">&nbsp;</span>
+    <span class="line"><span class="comment"># Or run without installing</span></span>
+    <span class="line"><span class="cmd">npx prompt-architect install</span></span>
+    <span class="line">&nbsp;</span>
+    <span class="line"><span class="comment"># With full mode</span></span>
+    <span class="line"><span class="cmd">npx prompt-architect install --mode full</span></span>
+  </div>
+
+  <h2 class="section-title">Examples</h2>
+  <div class="code-block">
+    <span class="line"><span class="comment"># Print the canonical template</span></span>
+    <span class="line"><span class="cmd">prompt-architect template</span></span>
+  </div>
+  <p>See <a href="https://github.com/simonbalazs/prompt-architect/tree/main/docs/examples">worked examples on GitHub</a> for brand messaging and AI security analysis.</p>
+</div>
+<footer class="footer">
+  <a href="https://github.com/simonbalazs/prompt-architect" target="_blank" rel="noopener">github.com/simonbalazs/prompt-architect</a>
+</footer>
+</body>
+</html>

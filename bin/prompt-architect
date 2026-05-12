@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROMPT_ARCHITECT_VERSION="0.1.0"
+
+show_help() {
+  cat <<'HELP'
+Usage: /prompt-architect <command> [options]
+
+Commands:
+  install       Install the prompt-architect hook into .claude/settings.local.json
+  template      Print the canonical prompt template to stdout
+  version       Show version
+  help          Show this help
+
+Options:
+  --mode    Hook mode to configure: full, light, off (default: light)
+
+Examples:
+  /prompt-architect install
+  /prompt-architect install --mode full
+  /prompt-architect template
+  /prompt-architect version
+HELP
+}
+
+COMMAND="${1:-help}"
+shift 2>/dev/null || true
+
+case "$COMMAND" in
+  install)
+    MODE="light"
+    while [[ $# -gt 0 ]]; do
+      case "$1" in
+        --mode) MODE="${2:-light}"; shift 2 ;;
+        *) shift ;;
+      esac
+    done
+    if [[ "$MODE" != "full" && "$MODE" != "light" && "$MODE" != "off" ]]; then
+      echo "Error: mode must be 'full', 'light', or 'off' (got: $MODE)" >&2
+      exit 1
+    fi
+    SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+    bash "$SCRIPT_DIR/scripts/install-hook.sh" "$MODE"
+    ;;
+  template)
+    SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+    cat "$SCRIPT_DIR/templates/prompt-template.xml"
+    ;;
+  version)
+    echo "prompt-architect v$PROMPT_ARCHITECT_VERSION"
+    ;;
+  help|*)
+    show_help
+    ;;
+esac

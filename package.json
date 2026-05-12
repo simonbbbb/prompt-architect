@@ -1,0 +1,30 @@
+{
+  "name": "prompt-architect",
+  "version": "0.1.0",
+  "description": "A Senior Prompt Engineer layer for Claude Code — translates fuzzy instructions into precision-engineered prompts using the 5-pillar framework",
+  "bin": {
+    "prompt-architect": "./bin/prompt-architect"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "templates/",
+    "SKILL.md"
+  ],
+  "keywords": [
+    "claude-code",
+    "prompt-engineering",
+    "claude",
+    "ai",
+    "prompt-optimization"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonbalazs/prompt-architect.git"
+  },
+  "homepage": "https://simonbalazs.github.io/prompt-architect/",
+  "engines": {
+    "node": ">=18"
+  }
+}

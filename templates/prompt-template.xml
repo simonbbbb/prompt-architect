@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prompt-architect — Canonical Prompt Template
+  ============================================
+  Copy this file and fill in the [bracketed sections].
+  Each section is a pillar of the 5-pillar prompt engineering framework:
+  Clarity, Context, Structure, Advanced Techniques, Iteration.
+
+  Full reference: https://github.com/simonbalazs/prompt-architect
+-->
+<role>
+[Persona — domain expert with specific expertise level.
+E.g., "Senior Software Engineer specializing in Rust systems programming"]
+</role>
+
+<context>
+<background>
+[Situation: what's happening right now, why this project exists.
+E.g., "We are migrating our auth service from JWT to OAuth 2.0 and need to update all integration points"]
+</background>
+<audience>
+[Who the output is for — be specific.
+E.g., "Fellow engineers on the platform team who need to review and approve the migration plan"]
+</audience>
+<source_material>
+[Optional: existing data, docs, code, or references.
+Delete this tag if not needed.
+E.g., "Current auth flow diagram at docs/auth/current-flow.md"]
+</source_material>
+</context>
+
+<objective>
+[Single, ultimate goal — one sentence.
+E.g., "Create a step-by-step migration plan from JWT to OAuth 2.0 with zero downtime"]
+</objective>
+
+<instructions>
+Break this project down into the following steps. Do not move to the next step until I review and approve the current one:
+
+Step 1: [Discovery/ideation — propose options.
+E.g., "Propose 3 migration strategies (big bang, phased, parallel run) with trade-offs"]
+Step 2: [Core deliverable — draft based on approved direction.
+E.g., "Write the detailed migration plan for the chosen strategy, including all code changes"]
+Step 3: [Refinement — critique own work, then revise.
+E.g., "Review the plan for security gaps, rollback scenarios, and edge cases"]
+Step 4: [Final polish — format per constraints, self-review.
+E.g., "Format the plan as a runbook with exact commands and verification steps"]
+</instructions>
+
+<format>
+[Exact output structure with example if needed.
+E.g., "Present the migration plan as a Markdown document with sections: Overview, Prerequisites, Migration Steps, Rollback Plan, Verification"]
+</format>
+
+<constraints>
+- Tone: [Specific tone. E.g., "Technical and precise, suitable for peer review"]
+- Length: [Quantified limit. E.g., "Keep the plan under 5 pages when printed"]
+- Exclusions: [What to avoid. E.g., "Do not include infrastructure provisioning steps — that's handled by DevOps"]
+- Limitations: [Boundaries on scope/sources. E.g., "Only use our existing codebase — do not invent third-party integrations"]
+</constraints>
+
+<review_criteria>
+Before finalizing, verify:
+1. [Criterion aligned with objective. E.g., "Does the plan achieve zero-downtime migration?"]
+2. [Criterion aligned with constraints. E.g., "Is every step verifiable with a specific command or check?"]
+3. [Criterion aligned with audience. E.g., "Can a platform engineer execute this without asking clarifying questions?"]
+</review_criteria>
+
+<first_action>
+[Specific first step to execute immediately.
+E.g., "Acknowledge this brief and execute Step 1: Propose 3 migration strategies"]
+</first_action>
