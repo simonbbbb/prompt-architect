@@ -148,7 +148,7 @@
     <div>
       <h3>What Anthropic released for free</h3>
       <ul>
-        <li><strong>24-min workshop</strong> — 40 techniques from the Applied AI team</li>
+        <li><strong>Prompting 101</strong> — 24-min workshop (~40 techniques) from the Applied AI team</li>
         <li><strong>1+ hour panel</strong> — Alignment, DevRel & prompt engineering leads</li>
         <li><strong>9-chapter interactive tutorial</strong> — with exercises on GitHub</li>
         <li><strong>Official docs</strong> — platform.claude.com/docs</li>
@@ -170,9 +170,9 @@
   <div class="slide-number">3 / 15</div>
 </div>
 
-<!-- SLIDE 4: The 3-Part Structure -->
+<!-- SLIDE 4: Role + Goal + Context -->
 <div class="slide left">
-  <h2>Every Prompt Needs 3 Things</h2>
+  <h2>Start With Role + Goal + Context</h2>
   <div class="two-col">
     <div>
       <h3>Before</h3>
@@ -193,13 +193,14 @@ Under 150 words.</pre>
     <tr><th>Role</th><th>Goal</th><th>Context</th></tr>
     <tr><td>Who is Claude?</td><td>What should it do?</td><td>Constraints, audience, format, background</td></tr>
   </table>
+  <p style="margin-top:1.5rem; font-size:0.95rem;"><span class="tag">Mental model</span> These three are the <strong>building blocks</strong> of a prompt. The 5 Pillars (coming up) are the <strong>checklist</strong> you run them through.</p>
   <div class="slide-number">4 / 15</div>
 </div>
 
 <!-- SLIDE 5: XML Tags -->
 <div class="slide left">
   <h2>Technique #1: XML Tags</h2>
-  <p>Wrapping each content type in its own tag reduces misinterpretation. This is Anthropic's <strong style="color:var(--text);">#1 reliability hack</strong>.</p>
+  <p>Wrapping each content type in its own tag reduces misinterpretation. It is <strong style="color:var(--text);">Anthropic's most-recommended structuring technique</strong>.</p>
   <div class="two-col" style="margin-top:1rem;">
     <div>
       <h3>❌ Blob Prompt</h3>
@@ -416,22 +417,30 @@ Do not move to next phase until approved.
   <div class="slide-number">13 / 15</div>
 </div>
 
-<!-- SLIDE 14: 3 Rules -->
+<!-- SLIDE 14: The 5 Pillars -->
 <div class="slide center">
   <div class="accent-line centered"></div>
-  <h2 style="margin-bottom:3rem;">3 Rules to Remember</h2>
-  <div style="display:flex; flex-direction:column; gap:2rem; max-width:600px; text-align:left;">
+  <h2 style="margin-bottom:3rem;">The 5 Pillars to Remember</h2>
+  <div style="display:flex; flex-direction:column; gap:1.6rem; max-width:650px; text-align:left;">
     <div>
-      <p style="font-size:1.4rem; color:var(--text); font-weight:600; margin-bottom:0.3rem;">1. Structure beats vibes</p>
-      <p>XML tags, not blob prompts. Separate instructions from context from input.</p>
+      <p style="font-size:1.25rem; color:var(--accent); font-weight:600; margin-bottom:0.2rem;">1. Clarity</p>
+      <p>One task per turn. Define the output format. Set explicit constraints.</p>
     </div>
     <div>
-      <p style="font-size:1.4rem; color:var(--text); font-weight:600; margin-bottom:0.3rem;">2. Examples are your superpower</p>
-      <p>2-3 diverse, relevant examples > clever wording every time.</p>
+      <p style="font-size:1.25rem; color:var(--accent); font-weight:600; margin-bottom:0.2rem;">2. Context</p>
+      <p>Provide relevant background. Know your audience. State success criteria.</p>
     </div>
     <div>
-      <p style="font-size:1.4rem; color:var(--text); font-weight:600; margin-bottom:0.3rem;">3. Gate the work</p>
-      <p>Don't let Claude burn hours on a wrong direction. Break into steps. Approve each one.</p>
+      <p style="font-size:1.25rem; color:var(--accent); font-weight:600; margin-bottom:0.2rem;">3. Structure</p>
+      <p>Use XML tags. Break into steps. Provide few-shot examples.</p>
+    </div>
+    <div>
+      <p style="font-size:1.25rem; color:var(--accent); font-weight:600; margin-bottom:0.2rem;">4. Advanced</p>
+      <p>Think step-by-step. Self-critique. Use a persona.</p>
+    </div>
+    <div>
+      <p style="font-size:1.25rem; color:var(--accent); font-weight:600; margin-bottom:0.2rem;">5. Iteration</p>
+      <p>Present options first. Gate steps. Ask for approval.</p>
     </div>
   </div>
   <div class="slide-number">14 / 15</div>
@@ -444,7 +453,7 @@ Do not move to next phase until approved.
     <div>
       <h3>Anthropic's Free Official Content</h3>
       <ul class="resources">
-        <li><a href="https://www.youtube.com/watch?v=ysPbXH0LpIE" target="_blank">Prompting 101 | Code w/ Claude</a> — 24 min, 40 techniques, Applied AI team</li>
+        <li><a href="https://www.youtube.com/watch?v=ysPbXH0LpIE" target="_blank">Prompting 101 | Code w/ Claude</a> — 24-min workshop (~40 techniques), Applied AI team</li>
         <li><a href="https://www.youtube.com/watch?v=T9aRN5JkmL8" target="_blank">AI Prompt Engineering: A Deep Dive</a> — 1+ hour panel</li>
         <li><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial" target="_blank">Interactive Tutorial</a> — 9 chapters with exercises</li>
         <li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview" target="_blank">Official Docs</a> — Prompting Best Practices</li>
